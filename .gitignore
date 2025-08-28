@@ -1,8 +1,10 @@
-# Compiled class file
+# Compiled class files
 *.class
 
-# Log file
+# Logs
 *.log
+*.tmp
+*.swp
 
 # BlueJ files
 *.ctxt
@@ -10,7 +12,7 @@
 # Mobile Tools for Java (J2ME)
 .mtj.tmp/
 
-# Package Files #
+# Package Files (ignora si es app; quita si es librería)
 *.jar
 *.war
 *.nar
@@ -19,6 +21,36 @@
 *.tar.gz
 *.rar
 
-# virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
+# VM crash logs
 hs_err_pid*
 replay_pid*
+
+# IntelliJ IDEA
+.idea/
+*.iml
+out/
+*.ipr
+*.iws
+
+# Eclipse
+.classpath
+.project
+.settings/
+
+# NetBeans
+nbproject/private/
+dist/
+nbdist/
+.nb-gradle/
+
+# VS Code
+.vscode/
+
+# Build outputs
+target/
+bin/
+build/
+
+# Sistema
+.DS_Store
+Thumbs.db
