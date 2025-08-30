@@ -16,7 +16,6 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.parameters.RequestBody;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import jakarta.validation.Valid;
 import java.math.BigDecimal;
 import java.net.URI;
 import lombok.RequiredArgsConstructor;
@@ -59,7 +58,8 @@ public class MovementController {
     @GetMapping("/account/{accountId}")
     public ResponseEntity<Page<MovementResponse>> byAccount(
             @Parameter(description = "ID de la cuenta", example = "1") @PathVariable Long accountId,
-            Pageable pageable) {
+            Pageable pageable
+    ) {
         return ResponseEntity.ok(movementService.byAccount(accountId, pageable));
     }
 
@@ -71,7 +71,8 @@ public class MovementController {
             })
     @GetMapping("/{id}")
     public ResponseEntity<MovementResponse> show(
-            @Parameter(description = "ID del movimiento", example = "10") @PathVariable Long id) {
+            @Parameter(description = "ID del movimiento", example = "10") @PathVariable Long id
+    ) {
         return ResponseEntity.ok(movementService.show(id));
     }
 
@@ -153,8 +154,8 @@ public class MovementController {
     @PatchMapping("/{id}")
     public ResponseEntity<MovementResponse> partialUpdate(
             @Parameter(description = "ID del movimiento", example = "10") @PathVariable Long id,
-            @Valid @org.springframework.web.bind.annotation.RequestBody MovementPartialUpdateRequest patch) {
-
+            @Validated(OnCreate.class) @org.springframework.web.bind.annotation.RequestBody
+            MovementPartialUpdateRequest patch) {
         return ResponseEntity.ok(movementService.partialUpdate(id, patch));
     }
 

@@ -188,7 +188,7 @@ class MovementControllerTest {
     @DisplayName("PATCH /api/movements/{id} aplica cambios parciales y devuelve 200")
     void patch_ok() throws Exception {
         MovementPartialUpdateRequest patch = new MovementPartialUpdateRequest();
-
+        patch.setDate(LocalDateTime.now());
 
         MovementResponse after = movementResponse(50L, 2L, MovementTypeEnum.DEPOSIT, "999.99", "1999.99");
         given(movementService.partialUpdate(eq(50L), any(MovementPartialUpdateRequest.class))).willReturn(after);

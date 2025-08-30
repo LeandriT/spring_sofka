@@ -376,20 +376,14 @@
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "{{url}}:8081/transactions/:param",
+              "raw": "{{url}}:8081/movements/1",
               "host": [
                 "{{url}}"
               ],
               "port": "8081",
               "path": [
-                "transactions",
-                ":param"
-              ],
-              "variable": [
-                {
-                  "key": "param",
-                  "value": "{{transaction_uuid}}"
-                }
+                "movements",
+                "1"
               ]
             }
           },
@@ -466,7 +460,7 @@
             "header": [],
             "body": {
               "mode": "raw",
-              "raw": "{\r\n    \"amount\": 11000.00,\r\n    \"account_uuid\": \"{{account_uuid}}\"\r\n}",
+              "raw": "{\r\n    \"amount\": 11000.00,\r\n    \"account_id\": 1\r\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -495,7 +489,7 @@
             "header": [],
             "body": {
               "mode": "raw",
-              "raw": "{\r\n    \"amount\": 11000.00,\r\n    \"account_uuid\": \"{{account_uuid}}\"\r\n}",
+              "raw": "{\r\n    \"amount\": 11000.00,\r\n    \"account_id\": 1\r\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -503,20 +497,15 @@
               }
             },
             "url": {
-              "raw": "{{url}}:8081/transactions/:param",
+              "raw": "{{url}}:8081/api/movements/1",
               "host": [
                 "{{url}}"
               ],
               "port": "8081",
               "path": [
-                "transactions",
-                ":param"
-              ],
-              "variable": [
-                {
-                  "key": "param",
-                  "value": "{{transaction_uuid}}"
-                }
+                "api",
+                "movements",
+                "1"
               ]
             }
           },

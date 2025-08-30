@@ -29,6 +29,7 @@ public class MovementServiceImpl implements MovementService {
     private final AccountService accountService;
     private final MovementRepository movementRepository;
     private final MovementMapper mapper;
+    private static final String MOVEMENT_NOT_FOUND = "Movimiento no encontrado: ";
 
     @Override
     public Page<MovementResponse> index(Pageable pageable) {
@@ -43,15 +44,15 @@ public class MovementServiceImpl implements MovementService {
 
     @Override
     public MovementResponse show(Long id) {
-        Movement mv = movementRepository.findById(id)
-                .orElseThrow(() -> new MovementNotFoundException("Movimiento no encontrado: " + id));
-        return mapper.toResponse(mv);
+        Movement movement = movementRepository.findById(id)
+                .orElseThrow(() -> new MovementNotFoundException(MOVEMENT_NOT_FOUND + id));
+        return mapper.toResponse(movement);
     }
 
     @Override
     @Transactional
     public MovementResponse create(MovementRequest request) {
-
+        log.info("Starting create movement");
         this.validateTransactionType(request);
         Movement entity = mapper.toModel(request);
         this.buildAccount(entity, request.getAccountId());
@@ -59,27 +60,27 @@ public class MovementServiceImpl implements MovementService {
         this.validateInsufficientFounds(entity.getAccount(), request);
         this.buildTransactionType(request, entity);
         movementRepository.save(entity);
+        log.info("Movement created successfully - id: {}", entity.getId());
         return mapper.toResponse(entity);
     }
 
     @Override
     @Transactional
     public MovementResponse update(Long id, MovementRequest request) {
+        log.info("Starting update movement");
         Movement entity = movementRepository.findById(id)
-                .orElseThrow(() -> new MovementNotFoundException("Movimiento no encontrado: " + id));
-
+                .orElseThrow(() -> new MovementNotFoundException(MOVEMENT_NOT_FOUND + id));
         if (request.getAccountId() != null &&
                 (entity.getAccount() == null || !request.getAccountId().equals(entity.getAccount().getId()))) {
             this.buildAccount(entity, request.getAccountId());
         }
         this.validateAccountStatus(entity.getAccount());
         request.setId(id);
-
         this.validateInsufficientFounds(entity.getAccount(), request);
         mapper.updateModel(request, entity);
         this.buildTransactionType(request, entity);
-
         movementRepository.save(entity);
+        log.info("End update movement");
         return mapper.toResponse(entity);
     }
 
@@ -87,19 +88,23 @@ public class MovementServiceImpl implements MovementService {
     @Override
     @Transactional
     public MovementResponse partialUpdate(Long id, MovementPartialUpdateRequest patch) {
+        log.info("Starting partialUpdate movement");
         Movement entity = movementRepository.findById(id)
-                .orElseThrow(() -> new MovementNotFoundException("Movimiento no encontrado: " + id));
+                .orElseThrow(() -> new MovementNotFoundException(MOVEMENT_NOT_FOUND + id));
         this.validateAccountStatus(entity.getAccount());
         entity.setDate(patch.getDate());
         movementRepository.save(entity);
+        log.info("End partialUpdate movement");
         return mapper.toResponse(entity);
     }
 
     @Override
     public void delete(Long id) {
+        log.info("Starting delete movement");
         Movement entity = movementRepository.findById(id)
-                .orElseThrow(() -> new MovementNotFoundException("Movimiento no encontrado: " + id));
+                .orElseThrow(() -> new MovementNotFoundException(MOVEMENT_NOT_FOUND + id));
         movementRepository.delete(entity);
+        log.info("End delete movement");
     }
 
     void buildAccount(Movement movement, Long accountId) {
@@ -110,7 +115,7 @@ public class MovementServiceImpl implements MovementService {
     void validateAccountStatus(Account account) {
         if (!account.isActive()) {
             throw new InactiveAccountException(
-                    "Cannot create transaction for inactive account: " + account.getAccountNumber());
+                    "Cannot create movement for inactive account: " + account.getAccountNumber());
         }
     }
 
@@ -123,7 +128,7 @@ public class MovementServiceImpl implements MovementService {
             }
         } else if (movementType == MovementTypeEnum.WITHDRAWAL) {
             if (request.getAmount().signum() != -1) {
-                String message = String.format("El monto del RETIRO no puede ser negativo: %s", request.getAmount());
+                String message = String.format("El monto del RETIRO no puede ser positivo: %s", request.getAmount());
                 throw new BalanceTypeSigNumUnavailableException(message);
             }
         }
@@ -133,18 +138,15 @@ public class MovementServiceImpl implements MovementService {
     void buildTransactionType(MovementRequest request, Movement entity) {
         MovementTypeEnum type = request.getMovementType();
         BigDecimal amount = request.getAmount().abs();
-
         BigDecimal balanceBefore;
         if (entity.getId() == null) {
             balanceBefore = currentBalance(entity.getAccount());
         } else {
             balanceBefore = currentBalance(entity.getAccount(), entity.getId());
         }
-
         BigDecimal balanceAfter = (type == MovementTypeEnum.DEPOSIT || type == MovementTypeEnum.INITIAL_DEPOSIT)
                 ? balanceBefore.add(amount)
                 : balanceBefore.subtract(amount);
-
         entity.setAmount(amount);
         entity.setBalance(balanceAfter);
         entity.setMovementType(type);
@@ -159,7 +161,6 @@ public class MovementServiceImpl implements MovementService {
             } else {
                 balanceExcludingUpdated = currentBalance(account, request.getId());
             }
-
             BigDecimal toWithdrawal = request.getAmount().abs();
             if (balanceExcludingUpdated.subtract(toWithdrawal).signum() == -1) {
                 String message = "Saldo no disponible";

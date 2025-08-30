@@ -206,7 +206,7 @@ class MovementServiceImplTest {
     }
 
     @Test
-    @DisplayName("create: retiro negativo lanza BalanceTypeSigNumUnavailableException")
+    @DisplayName("create: retiro positivo lanza BalanceTypeSigNumUnavailableException")
     void create_withdrawal_negative_amount_throws() {
         MovementRequest req = new MovementRequest();
         req.setAccountId(1L);

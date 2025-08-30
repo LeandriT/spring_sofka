@@ -64,7 +64,6 @@ public class AccountServiceImpl implements AccountService {
         entity.setInitialBalance(request.getInitialBalance());
         Account savedAccount = accountRepository.save(entity);
         log.info("Account created successfully with ID: {}", savedAccount.getId());
-
         if (request.getInitialBalance().compareTo(BigDecimal.ZERO) > 0) {
             MovementDto movementDto = new MovementDto(this, LocalDateTime.now(), MovementTypeEnum.INITIAL_DEPOSIT,
                     request.getInitialBalance(), savedAccount.getId(), request.getInitialBalance());
@@ -76,14 +75,12 @@ public class AccountServiceImpl implements AccountService {
 
     @Override
     public AccountResponse update(Long id, AccountRequest request) {
+        log.info("Starting update account");
         Account entity = accountRepository.findById(id)
                 .orElseThrow(() -> new AccountNotFoundException(String.format(ACCOUNT_NOT_FOUND_MESSAGE, id)));
-
-
         if (request.getClientId() != null && !Objects.equals(request.getClientId(), entity.getClientId())) {
             validateClientExists(request.getClientId());
         }
-
         List<Account> duplicates = accountRepository.findByClientIdAndAccountTypeAndAccountNumber(
                 request.getClientId() != null ? request.getClientId() : entity.getClientId(),
                 request.getAccountType() != null ? request.getAccountType() : entity.getAccountType(),
@@ -92,43 +89,40 @@ public class AccountServiceImpl implements AccountService {
 
         accountMapper.updateModel(request, entity);
         entity.setUpdatedAt(LocalDateTime.now());
-
         Account saved = accountRepository.save(entity);
+        log.info("End update account");
         return accountMapper.toResponse(saved);
     }
 
     @Override
     public AccountResponse partialUpdate(Long id, AccountPartialUpdateRequest patch) {
+        log.info("Starting partialUpdate account");
         Account entity = accountRepository.findById(id)
                 .orElseThrow(() -> new AccountNotFoundException(String.format(ACCOUNT_NOT_FOUND_MESSAGE, id)));
-
-
         accountMapper.partialUpdate(entity, patch);
-
-
         if (entity.getClientId() == null) {
             throw new IllegalArgumentException("clientId must not be null");
         }
         validateClientExists(entity.getClientId());
-
-
         if (entity.getAccountType() != null && entity.getAccountNumber() != null) {
             List<Account> duplicates =
                     accountRepository.findByClientIdAndAccountTypeAndAccountNumber(entity.getClientId(),
                             entity.getAccountType(), entity.getAccountNumber());
             this.validateDuplicateOnUpdate(duplicates, id);
         }
-
         entity.setUpdatedAt(LocalDateTime.now());
         Account saved = accountRepository.save(entity);
+        log.info("End partialUpdate account");
         return accountMapper.toResponse(saved);
     }
 
     @Override
     public void delete(Long id) {
+        log.info("Starting delete account");
         Account entity = accountRepository.findById(id)
                 .orElseThrow(() -> new AccountNotFoundException(String.format(ACCOUNT_NOT_FOUND_MESSAGE, id)));
         accountRepository.delete(entity);
+        log.info("End delete account");
     }
 
     @Override
