@@ -40,7 +40,6 @@ Actualiza la información parcial de un cliente.
 
 Elimina un cliente.
 
-
 Recupera una lista de clientes según los IDs proporcionados.
 
 ## Estructura de DTOs

@@ -4,7 +4,8 @@ app:
   environment: ${ENVIRONMENT:dev}
 
 spring:
-
+  jackson:
+    property-naming-strategy: SNAKE_CASE
   output:
     ansi:
       enabled: ALWAYS

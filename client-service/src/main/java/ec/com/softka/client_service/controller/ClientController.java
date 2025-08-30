@@ -82,8 +82,8 @@ public class ClientController {
     public ResponseEntity<ClientResponse> create(
             @Validated(OnCreate.class) @org.springframework.web.bind.annotation.RequestBody ClientRequest request) {
         ClientResponse created = clientService.create(request);
-        // si el servicio retorna el id nuevo:
-        URI location = URI.create("/api/clients/" + created.getDni()); // ajusta si usas Long id en el response
+
+        URI location = URI.create("/api/clients/" + created.getDni());
         return ResponseEntity.created(location).body(created);
     }
 

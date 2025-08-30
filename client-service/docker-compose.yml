@@ -14,8 +14,4 @@ services:
       # H2 console configuration
       - SPRING_H2_CONSOLE_ENABLED=true
       - SPRING_H2_CONSOLE_SETTINGS_WEB_ALLOW_OTHERS=true
-    # The 'volumes' section is commented out because it's not needed for a production-like image
-    # For development, you might uncomment this and enable spring-boot-devtools
-    # volumes:
-    #   - .:/app
     restart: always

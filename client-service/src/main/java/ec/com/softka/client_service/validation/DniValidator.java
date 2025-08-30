@@ -8,24 +8,24 @@ public class DniValidator implements ConstraintValidator<ValidDni, String> {
 
     @Override
     public boolean isValid(String dni, ConstraintValidatorContext context) {
-        // Primero, valida forma básica
+
         if (dni == null || !dni.matches("\\d{10}")) {
             setCustomMessage(context, dni);
             return false;
         }
 
-        // Provincia 01-24
+
         int provinceCode = Integer.parseInt(dni.substring(0, 2));
         if (provinceCode < 1 || provinceCode > 24) {
             setCustomMessage(context, dni);
             return false;
         }
 
-        // Dígito verificador (módulo 10)
+
         int suma = 0;
         for (int i = 0; i < 9; i++) {
             int num = dni.charAt(i) - '0';
-            if (i % 2 == 0) { // posiciones 0,2,4,6,8
+            if (i % 2 == 0) {
                 num *= 2;
                 if (num > 9) {
                     num -= 9;

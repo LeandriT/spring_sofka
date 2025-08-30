@@ -27,7 +27,7 @@ public class ErrorMessage {
 
     private Map<String, String> details;
 
-    // Constructor for simple error messages (backward compatibility)
+
     public ErrorMessage(String message) {
         this.message = message;
         this.timestamp = LocalDateTime.now();

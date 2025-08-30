@@ -1,0 +1,17 @@
+version: '3.8'
+
+services:
+  account-service:
+    build: .
+    ports:
+      - "8081:8081"
+    environment:
+      # H2 database configuration for in-memory use
+      - SPRING_DATASOURCE_URL=jdbc:h2:mem:accounts;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE
+      - SPRING_DATASOURCE_USERNAME=sa
+      - SPRING_DATASOURCE_PASSWORD=
+      - SERVER_PORT=8081
+      # H2 console configuration
+      - SPRING_H2_CONSOLE_ENABLED=true
+      - SPRING_H2_CONSOLE_SETTINGS_WEB_ALLOW_OTHERS=true
+    restart: always

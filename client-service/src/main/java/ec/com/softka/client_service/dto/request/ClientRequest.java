@@ -35,7 +35,6 @@ public class ClientRequest {
     @NotBlank(message = "phone is required", groups = {OnCreate.class})
     private String phone;
 
-    // Si en update NO quieres exigir password, quítalo de OnUpdate
     @NotBlank(message = "password is required", groups = {OnCreate.class})
     private String password;
 

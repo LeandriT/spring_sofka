@@ -1,4 +1,4 @@
--- Este script inserta datos en la tabla 'customers',
+-- Este script inserta datos en la tabla 'clients',
 -- utilizando comillas dobles para que los nombres de tablas y columnas
 -- se respeten en minúsculas.
 

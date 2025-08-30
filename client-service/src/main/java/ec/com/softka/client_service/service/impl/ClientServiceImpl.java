@@ -44,8 +44,8 @@ public class ClientServiceImpl implements ClientService {
     @Override
     @Transactional
     public ClientResponse create(ClientRequest request) {
-        this.validate(request);                      // 1) validar primero (existsByDni)
-        Client entity = mapper.toModel(request);     // 2) mapear si pasó la validación
+        this.validate(request);
+        Client entity = mapper.toModel(request);
         String encryptedPassword = passwordEncoder.encode(request.getPassword());
         entity.setPassword(encryptedPassword);
         repository.save(entity);

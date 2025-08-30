@@ -1,0 +1,586 @@
+{
+  "info": {
+    "_postman_id": "ee8688f9-d8d9-43ac-a59a-bc03b823f714",
+    "name": "softka",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "1378372"
+  },
+  "item": [
+    {
+      "name": "clients",
+      "item": [
+        {
+          "name": "index",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{url}}:8080/api/clients",
+              "host": [
+                "{{url}}"
+              ],
+              "port": "8080",
+              "path": [
+                "api",
+                "clients"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "show",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{url}}:8080/api/clients/4",
+              "host": [
+                "{{url}}"
+              ],
+              "port": "8080",
+              "path": [
+                "api",
+                "clients",
+                "4"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "create",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "var jsonData = JSON.parse(responseBody);\r",
+                  "if (jsonData.hasOwnProperty('uuid')) {\r",
+                  "    postman.setEnvironmentVariable(\"customer_uuid\", jsonData.uuid);\r",
+                  "}\r",
+                  "\r",
+                  ""
+                ],
+                "type": "text/javascript",
+                "packages": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"name\": \"Gandhy Cuasapas\",\r\n    \"gender\": \"M\",\r\n    \"age\": 30,\r\n    \"dni\": \"0401590039\",\r\n    \"address\": \"Otavalo sn y principal\",\r\n    \"phone\": \"098254785\",\r\n    \"password\": \"1234567\",\r\n    \"active\": \"true\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{url}}:8080/api/clients",
+              "host": [
+                "{{url}}"
+              ],
+              "port": "8080",
+              "path": [
+                "api",
+                "clients"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "total update",
+          "request": {
+            "method": "PUT",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"name\": \"Gandhy Leandro Cuasapas Ponce\",\r\n    \"active\": true\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{url}}:8080/api/clients/4",
+              "host": [
+                "{{url}}"
+              ],
+              "port": "8080",
+              "path": [
+                "api",
+                "clients",
+                "4"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "partial update",
+          "request": {
+            "method": "PATCH",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"active\": true\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{url}}:8080/api/clients/4",
+              "host": [
+                "{{url}}"
+              ],
+              "port": "8080",
+              "path": [
+                "api",
+                "clients",
+                "4"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "delete",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{url}}:8080/api/clients/4",
+              "host": [
+                "{{url}}"
+              ],
+              "port": "8080",
+              "path": [
+                "api",
+                "clients",
+                "4"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "accounts",
+      "item": [
+        {
+          "name": "Index",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{url}}:8081/api/accounts",
+              "host": [
+                "{{url}}"
+              ],
+              "port": "8081",
+              "path": [
+                "api",
+                "accounts"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "show",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{url}}:8081/accounts/1",
+              "host": [
+                "{{url}}"
+              ],
+              "port": "8081",
+              "path": [
+                "accounts",
+                "1"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Create",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "var jsonData = JSON.parse(responseBody);\r",
+                  "postman.setEnvironmentVariable(\"account_uuid\", jsonData.uuid);\r",
+                  "\r",
+                  "\r",
+                  ""
+                ],
+                "type": "text/javascript",
+                "packages": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"account_number\": \"AHO-192381823812\",\r\n    \"account_type\": \"AHORROS\",\r\n    \"initial_balance\": 10.00,\r\n    \"active\": true,\r\n    \"client_id\": 4\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{url}}:8081/api/accounts",
+              "host": [
+                "{{url}}"
+              ],
+              "port": "8081",
+              "path": [
+                "api",
+                "accounts"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "total update",
+          "request": {
+            "method": "PUT",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"initial_balance\": 11000.00\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{url}}:8081/api/accounts/1",
+              "host": [
+                "{{url}}"
+              ],
+              "port": "8081",
+              "path": [
+                "api",
+                "accounts",
+                "1"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "partial update",
+          "request": {
+            "method": "PATCH",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"initial_balance\": 11000.00\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{url}}:8081/accounts/:param",
+              "host": [
+                "{{url}}"
+              ],
+              "port": "8081",
+              "path": [
+                "accounts",
+                ":param"
+              ],
+              "variable": [
+                {
+                  "key": "param",
+                  "value": "{{account_uuid}}"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "delete",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{url}}:8081/accounts/:param",
+              "host": [
+                "{{url}}"
+              ],
+              "port": "8081",
+              "path": [
+                "accounts",
+                ":param"
+              ],
+              "variable": [
+                {
+                  "key": "param",
+                  "value": "{{param}}"
+                }
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "movements",
+      "item": [
+        {
+          "name": "index",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{url}}:8081/api/movements",
+              "host": [
+                "{{url}}"
+              ],
+              "port": "8081",
+              "path": [
+                "api",
+                "movements"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "show",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{url}}:8081/transactions/:param",
+              "host": [
+                "{{url}}"
+              ],
+              "port": "8081",
+              "path": [
+                "transactions",
+                ":param"
+              ],
+              "variable": [
+                {
+                  "key": "param",
+                  "value": "{{transaction_uuid}}"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "movements by account",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{url}}:8081/api/movements/account/2",
+              "host": [
+                "{{url}}"
+              ],
+              "port": "8081",
+              "path": [
+                "api",
+                "movements",
+                "account",
+                "2"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "create",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "var jsonData = JSON.parse(responseBody);\r",
+                  "postman.setEnvironmentVariable(\"transaction_uuid\", jsonData.uuid);\r",
+                  "\r",
+                  ""
+                ],
+                "type": "text/javascript",
+                "packages": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"account_id\": 6,\r\n    \"date\": \"2024-08-02T14:30:00\",\r\n    \"movement_type\": \"RETIRO\",\r\n    \"amount\": -1\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{url}}:8081/api/movements",
+              "host": [
+                "{{url}}"
+              ],
+              "port": "8081",
+              "path": [
+                "api",
+                "movements"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "total update",
+          "request": {
+            "method": "PUT",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"amount\": 11000.00,\r\n    \"account_uuid\": \"{{account_uuid}}\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{url}}:8081/api/movements/1",
+              "host": [
+                "{{url}}"
+              ],
+              "port": "8081",
+              "path": [
+                "api",
+                "movements",
+                "1"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "partial update",
+          "request": {
+            "method": "PATCH",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"amount\": 11000.00,\r\n    \"account_uuid\": \"{{account_uuid}}\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{url}}:8081/transactions/:param",
+              "host": [
+                "{{url}}"
+              ],
+              "port": "8081",
+              "path": [
+                "transactions",
+                ":param"
+              ],
+              "variable": [
+                {
+                  "key": "param",
+                  "value": "{{transaction_uuid}}"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "delete",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{url}}:8081/api/movements/1",
+              "host": [
+                "{{url}}"
+              ],
+              "port": "8081",
+              "path": [
+                "api",
+                "movements",
+                "1"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "report",
+      "item": [
+        {
+          "name": "EstadoCuenta",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{url}}:8081/api/reportes?cliente=2&desde=2022-02-02&hasta=2026-02-20",
+              "host": [
+                "{{url}}"
+              ],
+              "port": "8081",
+              "path": [
+                "api",
+                "reportes"
+              ],
+              "query": [
+                {
+                  "key": "cliente",
+                  "value": "2"
+                },
+                {
+                  "key": "desde",
+                  "value": "2022-02-02"
+                },
+                {
+                  "key": "hasta",
+                  "value": "2026-02-20"
+                }
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    }
+  ]
+}
