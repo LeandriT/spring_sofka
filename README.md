@@ -62,7 +62,7 @@ clientes, lo que permite vincular cuentas y movimientos a los datos de los clien
 ## Ejecución
 
 Para ejecutar cada microservicio, siga los siguientes pasos:
-Tener docker - docker compose instalador y ejecutar el comando
+Tener docker - docker compose instalado y ejecutar el comando
 
 - docker compose up -d
 
